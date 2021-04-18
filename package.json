@@ -1,0 +1,12 @@
+{
+  "name": "cookie-agent",
+  "version": "0.0.0",
+  "description": "http.Agent which remembers cookies",
+  "main": "cookieAgent.js",
+  "scripts": {},
+  "author": "Peter Petrov <onestone@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "tough-cookie": "^4.0.0"
+  }
+}
