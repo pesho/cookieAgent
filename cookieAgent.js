@@ -16,7 +16,7 @@ function cookieAgentFactory(BaseClass) {
          * @param {http.RequestOptions} opts
          */
         addRequest(req, opts, ...args) {
-            const currentUrl = opts.href;
+            const currentUrl = req.protocol+"//"+(req.getHeader("Host") || req.host)+req.path;
             const rawCookie = req.getHeader("Cookie");
             const userCookies = rawCookie ? (Array.isArray(rawCookie) ? rawCookie : [rawCookie]) : [];
             const jarCookies = this.cookieJar.getCookiesSync(currentUrl).map((cookie) => cookie.cookieString());
