@@ -1,6 +1,8 @@
 const http = require("http");
+const https = require("https");
 const tough = require("tough-cookie");
 
+let registered = false;
 const defaultCookieJar = new tough.CookieJar();
 
 function cookieAgentFactory(BaseClass) {
@@ -36,4 +38,18 @@ function cookieAgentFactory(BaseClass) {
     return CookieAgent;
 }
 
-module.exports = cookieAgentFactory;
+function register() {
+    if (registered) return;
+    const HTTPAgent = cookieAgentFactory(http.Agent);
+    const HTTPSAgent = cookieAgentFactory(https.Agent);
+    const httpAgent = new HTTPAgent();
+    const httpsAgent = new HTTPSAgent();
+    http.Agent = HTTPAgent;
+    https.Agent = HTTPSAgent;
+    http.globalAgent = httpAgent;
+    https.globalAgent = httpsAgent;    
+    registered = true;
+};
+
+exports.cookieAgentFactory = cookieAgentFactory;
+exports.register = register;
